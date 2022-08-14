@@ -1,3 +1,9 @@
+import Orders from '../components/Orders';
+
 export default function OrdersPage() {
-  return <div>Hello Orders Page</div>;
+  return (
+    <div>
+      <Orders />
+    </div>
+  );
 }

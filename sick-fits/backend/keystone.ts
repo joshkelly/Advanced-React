@@ -9,9 +9,14 @@ import { User } from './schemas/User';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
 import { CartItem } from './schemas/CartItem';
+import { OrderItem } from './schemas/OrderItem';
+import { Order } from './schemas/Order';
+import { Role } from './schemas/Role';
 import 'dotenv/config';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
+import { extendGraphqlSchema } from './mutations';
+import { permissionsList } from './schemas/field';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost:27017/sick-fits-keystone';
@@ -60,16 +65,20 @@ export default withAuth(
       Product,
       ProductImage,
       CartItem,
+      OrderItem,
+      Order,
+      Role,
     }),
+    extendGraphqlSchema,
     ui: {
       // Show the UI only for users that pass this test
-      isAccessAllowed: ({ session }) => {
-        console.log(session);
-        return !!session?.data;
-      },
+      isAccessAllowed: ({ session }) =>
+        // console.log(session);
+        !!session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
-      User: 'id',
+      // GraphQL Query
+      User: `id name email role { ${permissionsList.join(' ')} }`,
     }),
   })
 );

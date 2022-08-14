@@ -71,7 +71,6 @@ export default function UpdateProduct({ id }) {
   };
 
   const { inputs, handleChange } = useForm(data?.Product || placeholderProduct);
-  console.log(inputs);
 
   // 3. Form to handle the updates
 
@@ -90,7 +89,7 @@ export default function UpdateProduct({ id }) {
             description: inputs.description,
           },
         }).catch(console.error);
-        console.log(res);
+
         // TODO: Handle Submit!!!
         // const res = await createProduct();
         // clearForm();
