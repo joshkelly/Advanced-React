@@ -1,9 +1,9 @@
-import { createAuth } from '@keystone-next/auth';
-import { config, createSchema } from '@keystone-next/keystone/schema';
+import { createAuth } from '@keystone-6/auth';
+import { config, createSchema } from '@keystone-6/core';
 import {
   withItemData,
   statelessSessions,
-} from '@keystone-next/keystone/session';
+} from '@keystone-6/core/session';
 import { permissionsList } from './schemas/fields';
 import { Role } from './schemas/Role';
 import { OrderItem } from './schemas/OrderItem';
@@ -51,9 +51,10 @@ export default withAuth(
         origin: [process.env.FRONTEND_URL],
         credentials: true,
       },
+      port: 3333,
     },
     db: {
-      adapter: 'mongoose',
+      adapter: 'postgresql',
       url: databaseURL,
       async onConnect(keystone) {
         console.log('Connected to the database!');
