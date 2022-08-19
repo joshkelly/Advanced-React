@@ -39,6 +39,8 @@ const { withAuth } = createAuth({
   },
 });
 
+console.log('FRONTEND_URL: ', process.env.FRONTEND_URL);
+
 export default withAuth(
   config({
     // @ts-ignore
@@ -47,9 +49,10 @@ export default withAuth(
         origin: [process.env.FRONTEND_URL],
         credentials: true,
       },
+      port: 3000,
     },
     db: {
-      provider: 'sqlite',
+      provider: 'postgresql',
       url: databaseURL,
       async onConnect(context) {
         console.log('Connected to the database!');
